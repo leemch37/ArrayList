@@ -22,6 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ListView taraList;
+    int count=0;
 
 
     @Override
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         items.add(new TARAValueObject("은정", res.getDrawable(R.drawable.t_ara_icon_eunjung)));
 
         TARAArrayAdapter adapter = new TARAArrayAdapter(this, items);
+
 
         taraList.setAdapter(adapter);
 
@@ -79,11 +81,14 @@ public class MainActivity extends AppCompatActivity {
 
         //이 메소드는 어댑터뷰에서 그려질 아이템의 수만큼 호출된다. 또한 화면에서 보여질 때 마다 매번 호출됨을 명심!
 
-        ViewHolder viewHolder;
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+
+
            final TARAValueObject valueObject =(TARAValueObject) getItem(position);
+           final ViewHolder viewHolder;
 
 
             //convertView인자는 그려질 아이템의 root(보통) 값을 의미한다.
@@ -94,11 +99,31 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder = new ViewHolder();
                 viewHolder.memberImageWD = (ImageView) convertView.findViewById(R.id.member_image);
                 viewHolder.memberNameWD =(TextView)convertView.findViewById(R.id.member_name);
+                viewHolder.likeWD=(ImageView)convertView.findViewById(R.id.like);
+                viewHolder.likecountWD=(TextView)convertView.findViewById(R.id.likecount);
+
+
                 convertView.setTag(viewHolder);
+            }else{
+                viewHolder = (ViewHolder)convertView.getTag();
             }
-            viewHolder =(ViewHolder)convertView.getTag();
+
+
             viewHolder.memberImageWD.setImageDrawable(valueObject.memberImage);
             viewHolder.memberNameWD.setText(valueObject.memberName);
+
+
+            viewHolder.likeWD.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    Toast.makeText(currentContext, "좋아요!", Toast.LENGTH_SHORT).show();
+                    valueObject.likeCount++;
+                    viewHolder.likecountWD.setText("좋아요 받은 수 " + String.valueOf(valueObject.likeCount));
+                }
+            });
+
+
+
 
             viewHolder.memberImageWD.setOnTouchListener(new View.OnTouchListener(){
                     @Override
@@ -109,14 +134,30 @@ public class MainActivity extends AppCompatActivity {
 
             });
 
-            //한행이 그려질 root 레이아웃을 return 한다.
+            /*
+            viewHolder.likeWD.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Toast.makeText(currentContext, "좋아요!", Toast.LENGTH_SHORT).show();
+
+                    TextView likecount= (TextView) findViewById(R.id.likecount);
+
+                    count++;
+                    likecount.setText(count);
+                    //viewHolder.likecountWD.setText(count);
+
+                }
+            });
+*/
 
             return convertView;
         }
         private class ViewHolder{
             public ImageView memberImageWD;
             public TextView memberNameWD;
+            public ImageView likeWD;
+            public TextView likecountWD;
         }
+
     }
 }
 

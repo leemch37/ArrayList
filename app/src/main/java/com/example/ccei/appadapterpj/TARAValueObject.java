@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 public class TARAValueObject {
     public String memberName;
     public Drawable memberImage;
+    public int likeCount;
 
     public TARAValueObject(String memberName, Drawable memberImage) {
         this.memberName = memberName;

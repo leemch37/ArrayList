@@ -22,6 +22,18 @@
         android:textColor="#aa000000"
         android:textSize="20sp"
         android:id="@+id/member_name"/>
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/like"
+        android:background="@drawable/like"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/likecount"/>
 
 </LinearLayout>
