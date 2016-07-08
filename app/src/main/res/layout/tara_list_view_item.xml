@@ -23,4 +23,5 @@
         android:textSize="20sp"
         android:id="@+id/member_name"/>
 
+
 </LinearLayout>

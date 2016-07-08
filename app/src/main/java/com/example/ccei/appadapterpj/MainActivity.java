@@ -5,9 +5,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.ImageView;
@@ -22,6 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ListView taraList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +44,17 @@ public class MainActivity extends AppCompatActivity {
         TARAArrayAdapter adapter = new TARAArrayAdapter(this, items);
 
         taraList.setAdapter(adapter);
-        taraList.setOnItemClickListener(itemListener);
+
+      //  taraList.setOnItemClickListener(itemListener);
 
     }
+
+    /*
+    아이템행을 터치하면 발생하는 이벤트이며
+    아이템안에 존재하는 각 위젯에 이벤트를 설정시 itemClick 이벤트가 먼저 발생하게 되므로 이 이벤트를 설정하지 않는것이 보편적.
     private AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-
-
-            /*
-            LinearLayout itemRoot = (LinearLayout)view;
-            String memberName = ((TextView)((LinearLayout)view).getChildeAt(1)).getText().toString();
-            */
 
 
 
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, valueObject.memberName + " 을 선택하셨습니다", Toast.LENGTH_SHORT).show();
         }
     };
+
+    */
 
 
     //가장 기본이되는 어댑터, 개발자의 능력에 따라 자료구조를 다양하게 재정의하여 사용할 수 있다.
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            TARAValueObject valueObject =(TARAValueObject) getItem(position);
+           final TARAValueObject valueObject =(TARAValueObject) getItem(position);
 
 
             //convertView인자는 그려질 아이템의 root(보통) 값을 의미한다.
@@ -97,6 +99,15 @@ public class MainActivity extends AppCompatActivity {
             viewHolder =(ViewHolder)convertView.getTag();
             viewHolder.memberImageWD.setImageDrawable(valueObject.memberImage);
             viewHolder.memberNameWD.setText(valueObject.memberName);
+
+            viewHolder.memberImageWD.setOnTouchListener(new View.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event){
+                        Toast.makeText(currentContext, valueObject.memberName + " 을 선택했음", Toast.LENGTH_SHORT).show();
+                    return false;
+              }
+
+            });
 
             //한행이 그려질 root 레이아웃을 return 한다.
 
